@@ -3,18 +3,14 @@ const { handleMongooseError } = require("../helpers");
 
 const userSchema = new Schema(
     {
-        user: {
-            type: String,
-            required: true,
-        },
-        password: {
-            type: String,
-            required: [true, 'Set password for user'],
-        },
         email: {
             type: String,
             required: [true, 'Email is required'],
             unique: true,
+        },
+        password: {
+            type: String,
+            required: [true, 'Set password for user'],
         },
         subscription: {
             type: String,
