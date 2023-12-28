@@ -8,6 +8,8 @@ const path = require("node:path");
 
 const { SECRET_KEY } = process.env;
 
+const avatarsDir = path.join(path.dirname(__dirname, "../", "public", "avatars"));
+
 const register = async (req, res, next) => {
     const { email, password } = req.body;
     const avatarURL = gravatar.url(email);
@@ -85,7 +87,7 @@ const updateUserAvatar = async (req, res) => {
     const { path: tempPath, originalname } = req.file;
     const { _id } = req.user;
     const filename = _id + originalname;
-    const newPath = path.join("public/avatars", filename);
+    const newPath = path.join(avatarsDir, filename);
     await fs.rename(tempPath, newPath);
     const avatarURL = path.join("avatars", filename);
     const updatedUser = await User.findByIdAndUpdate(_id, { avatarURL });

@@ -1,7 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 
-const tempPath = path.join(__dirname, "../temp");
+const tempPath = path.join(__dirname, "../", "temp");
 
 const storage = multer.diskStorage({
     destination: tempPath,
