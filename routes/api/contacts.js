@@ -2,7 +2,6 @@ const express = require("express");
 const contacts = require("../../controllers/contacts");
 const {
   validateBody,
-  validateFavorite,
   isValidId,
   authenticate,
 } = require("../../middlewares");
@@ -35,7 +34,7 @@ router.patch(
   "/:contactId/favorite",
   authenticate,
   isValidId,
-  validateFavorite(Schemas.favoriteSchema),
+  validateBody(Schemas.favoriteSchema),
   contacts.updateStatusContact
 );
 

@@ -2,10 +2,8 @@ const express = require("express");
 const auth = require("../../controllers/auth");
 const {
     validateBody,
-    validateSubscription,
     upload,
     resizeAvatar,
-    validateAvatar,
 } = require("../../middlewares");
 const schemas = require("../../schemas");
 const { authenticate } = require("../../middlewares");
@@ -24,7 +22,7 @@ router.get("/current", authenticate, auth.getCurrentUser);
 router.patch(
     "/",
     authenticate,
-    validateSubscription(schemas.subscriptionSchema),
+    validateBody(schemas.subscriptionSchema),
     auth.updateSubscriptionStatus
 );
 
@@ -32,9 +30,17 @@ router.patch(
     "/avatars",
     authenticate,
     upload.single("avatar"),
-    validateAvatar(schemas.avatarSchema),
+    validateBody(schemas.avatarSchema),
     resizeAvatar,
     auth.updateUserAvatar
+);
+
+router.get("/verify/:verificationToken", auth.verifyEmail);
+
+router.post(
+    "/verify",
+    validateBody(schemas.verifyEmailSchema),
+    auth.resendVerifyEmail
 );
 
 
